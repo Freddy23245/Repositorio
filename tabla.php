@@ -70,7 +70,7 @@ $fila=ProductoControlador::mostrar_prod();
 									<input type="hidden" name="accion" value="2">
 									<input type="hidden" name="id" value="<?php echo $p['id_producto']; ?>">
 
-                               </form>
+                            	</form>
 
 							<?php } ?>
 								
@@ -90,7 +90,7 @@ $fila=ProductoControlador::mostrar_prod();
 						}
 				?>
 
-          </tbody>
+        </tbody>
 		</table>
 	</div>
 </section>

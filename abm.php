@@ -113,34 +113,32 @@ if (isset($_POST['accion'])){
 
     case '3':   
       $id = $_POST['id'];
-      if(DetalleCompraControlador::ProductoDetalle($id))
-      {
-          $_SESSION['message'] = 'No se puede borrar producto del detalleCompra'; //guardo mensaje en session
-                    $_SESSION['message_type'] = 'warning';
+         if(DetalleCompraControlador::ProductoDetalle($id))
+         {
+            $_SESSION['message'] = 'El producto no se puede eliminar por favor verifique que no este en una compra'; //guardo mensaje en session
+            $_SESSION['message_type'] = 'warning';
 
-      }else if (ProductoControlador::eliminar_prod($id)){
-        //$_SESSION['message'] = 'Producto eliminado correctamente'; //guardo mensaje en session
-        //$_SESSION['message_type'] = 'success';
-
-        echo "se elimino";
+         }else{
+            if(ProductoControlador::eliminar_prod($id))
+            {
+               $_SESSION['message'] = 'Producto eliminado'; //guardo mensaje en session
+               $_SESSION['message_type'] = 'warning';
+            }else{
+               $_SESSION['message'] = 'Error al eliminar'; //guardo mensaje en session
+               $_SESSION['message_type'] = 'warning';
+            }
+         }
       
-       } else {
-        //$_SESSION['message'] = 'Error al eliminar'; //guardo mensaje en session
-        //$_SESSION['message_type'] = 'warning';
-       echo "error al borrar";
-
-     }//else
-              
-                break;
+ 
+      break;
             default:
-                echo "No se ha seleccionado ninguna accion";
-                break;
+               echo "No se ha seleccionado ninguna accion";
+               break;
 
             } //switch
  } //isset accion
 
 ?>
-
         <section class="productosabm container">
         <div class="row">
 
