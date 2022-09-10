@@ -1,5 +1,5 @@
 <?php 
-
+//Prueba de Cambios
 require("templates/head.php");
 require("templates/header.php");
 require("validar_imagen.php");
