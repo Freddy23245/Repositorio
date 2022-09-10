@@ -119,15 +119,16 @@ if (isset($_POST['accion'])){
             $_SESSION['message_type'] = 'warning';
 
          }else{
-            if(ProductoControlador::eliminar_prod($id))
+            echo "ERROR EN DETALLE CONTROLADOR";
+         }
+         if(ProductoControlador::eliminar_prod($id))
             {
                $_SESSION['message'] = 'Producto eliminado'; //guardo mensaje en session
                $_SESSION['message_type'] = 'warning';
             }else{
-               $_SESSION['message'] = 'Error al eliminar'; //guardo mensaje en session
+               $_SESSION['message'] = 'Error al eliminar el producto'; //guardo mensaje en session
                $_SESSION['message_type'] = 'warning';
             }
-         }
       
  
       break;
