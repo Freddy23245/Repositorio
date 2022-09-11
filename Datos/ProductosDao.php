@@ -22,7 +22,6 @@ class ProductosDao extends Conexion{
         self::$con=null;
     }
 
-
   public static function Agregar_Productos($prod){
 
     $query="insert into productos(id_marca,id_categoria,nombre,precio,descripcion,talle,stock,imagen) values(:id_marca,:id_categoria,:nombre,:precio,:descripcion,:talle,:stock,:imagen)";
@@ -46,8 +45,6 @@ class ProductosDao extends Conexion{
     return  $resultado = self::$con->lastInsertId();
   }
 
-
-
   public static function Editar_productos($prod){
 
     $query="update productos set id_marca=:id_marca,id_categoria=:id_categoria,nombre=:nombre,precio=:precio,descripcion=:descripcion,talle=:talle,stock=:stock,imagen=:imagen  
@@ -70,28 +67,27 @@ class ProductosDao extends Conexion{
 
     $resultado->execute();
 
-
-
   }
-
 
   public static function Eliminar_productos($prod){
 
+try {
+  $query="delete from productos where id_producto=:id_producto";
 
-    $query="delete from productos where id_producto=:id_producto";
+  self::getConnection();
 
-    self::getConnection();
+  $resultado=self::$con->prepare($query);
 
-    $resultado=self::$con->prepare($query);
+  $resultado->bindValue(":id_producto",$prod->getId_producto());
 
-    $resultado->bindValue(":id_producto",$prod->getId_producto());
-
-    $resultado->execute();
+  $resultado->execute();
+} catch (Exception $e) {
+  //echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+  $_SESSION['message'] = 'No se pudo eliminar el producto '; //guardo mensaje en session
+  $_SESSION['message_type'] = 'warning';
+}
 
   }
-
-
-
 
   public static function listar_productos()
   {
@@ -107,7 +103,6 @@ class ProductosDao extends Conexion{
       $filas=$resultado->fetchAll();
 
       return $filas;
-
 
   }
 
@@ -125,11 +120,8 @@ class ProductosDao extends Conexion{
       $filas=$resultado->fetchAll();
 
       return $filas;
-
-
   }
 
-  
   public static function get_productos($id)
   {
       $query="SELECT p.id_producto, p.nombre,p.precio,p.stock,p.descripcion,p.talle,p.imagen,m.nombre as Marca,c.nombre as Categoria FROM 
@@ -157,10 +149,7 @@ class ProductosDao extends Conexion{
       $prod->setId_marca($filas["Marca"]);
       $prod->setId_categoria($filas["Categoria"]);
     
-
       return $prod;
-
-
   }
 
   public static function catalogo_prod($id)

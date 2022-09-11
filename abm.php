@@ -12,6 +12,7 @@ require_once("Controladores/DetalleCompraControlador.php");
 
  $fila1=CategoriaControlador::mostrar();
  $fila2=CategoriaControlador::mostrar_marca();
+ $flag = false;
 if (isset($_POST['accion'])){
   
   switch ($_POST['accion']){
@@ -112,25 +113,23 @@ if (isset($_POST['accion'])){
     break;
 
     case '3':   
+      $flag = true;
       $id = $_POST['id'];
-         if(DetalleCompraControlador::ProductoDetalle($id))
-         {
-            $_SESSION['message'] = 'El producto no se puede eliminar por favor verifique que no este en una compra'; //guardo mensaje en session
-            $_SESSION['message_type'] = 'warning';
+     if(DetalleCompraControlador::ProductoDetalle($id))
+      {
+          $_SESSION['message'] = 'No se puede borrar producto verifique que no este en una compra'; //guardo mensaje en session
+                    $_SESSION['message_type'] = 'warning';
 
-         }else{
-            echo "ERROR EN DETALLE CONTROLADOR";
-         }
-         if(ProductoControlador::eliminar_prod($id))
-            {
-               $_SESSION['message'] = 'Producto eliminado'; //guardo mensaje en session
+      }else{
+          if($flag)
+          {
+               ProductoControlador::eliminar_prod($id);
+                $_SESSION['message'] = 'Producto eliminado correctamente'; //guardo mensaje en session
                $_SESSION['message_type'] = 'warning';
-            }else{
-               $_SESSION['message'] = 'Error al eliminar el producto'; //guardo mensaje en session
-               $_SESSION['message_type'] = 'warning';
-            }
-      
- 
+
+          }
+      }
+
       break;
             default:
                echo "No se ha seleccionado ninguna accion";
